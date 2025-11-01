@@ -1,36 +1,50 @@
 import React, { useState } from "react";
-import { Form, Button, Row, Col, Container } from "react-bootstrap";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
-function SearchMovie({ onSearch }) {
-  const [term, setTerm] = useState("");
+function SearchMovie({ onSearch, onCategorySelect }) {
+  const [searchTerm, setSearchTerm] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (term.trim() === "") return;
-    onSearch(term);
+    onSearch(searchTerm);
+  };
+
+  const handleCategoryChange = (e) => {
+    const category = e.target.value;
+    onCategorySelect(category);
   };
 
   return (
-    <Container className="my-4">
-      <Form onSubmit={handleSubmit}>
-        <Row className="justify-content-center">
-          <Col md={6}>
-            <Form.Control
-              type="text"
-              placeholder="Search Here for Your Favorite Movie..."
-              value={term}
-              onChange={(e) => setTerm(e.target.value)}
-              className="text-primary fw-bold"
-            />
-          </Col>
-          <Col md="auto">
-            <Button variant="primary" type="submit">
-              Search
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Container>
+    <Form onSubmit={handleSubmit} className="p-3 bg-dark text-light rounded">
+      <Row className="align-items-center g-2">
+        <Col md={5}>
+          <Form.Control
+            type="text"
+            placeholder="Search by title..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </Col>
+
+        <Col md={4}>
+          <Form.Select onChange={handleCategoryChange} defaultValue="">
+            <option value="">Select Category</option>
+            <option value="28">Action</option>
+            <option value="35">Comedy</option>
+            <option value="18">Drama</option>
+            <option value="27">Horror</option>
+            <option value="10749">Romance</option>
+            <option value="878">Sci-Fi</option>
+          </Form.Select>
+        </Col>
+
+        <Col md={3}>
+          <Button type="submit" variant="primary" className="w-100">
+            Search
+          </Button>
+        </Col>
+      </Row>
+    </Form>
   );
 }
 

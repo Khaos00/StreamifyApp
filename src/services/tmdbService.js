@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const TMDB_API = "https://api.themoviedb.org/3";
-const API_KEY = "7433e30ae3ecf6a5b9797c0538c421f5"; 
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
 
 export async function getLatestMovies() {
